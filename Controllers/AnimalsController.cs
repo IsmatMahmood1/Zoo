@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Zoo.Repositories;
+using Zoo.Models.Response;
 
 namespace Zoo.Controllers
 {
@@ -10,11 +11,18 @@ namespace Zoo.Controllers
     {
         private readonly IAnimalsRepo _animals;
 
-        private AnimalsController(IAnimalsRepo animals)
+        public AnimalsController(IAnimalsRepo animals)
         {
             _animals = animals;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<AnimalResponse> GetById([FromRoute] int id)
+        {
+            var animal = _animals.GetById(id);
+
+            return new AnimalResponse(animal);
+        }
     }
 
 }

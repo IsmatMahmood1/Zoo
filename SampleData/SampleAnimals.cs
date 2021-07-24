@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Zoo.Models.Enums;
 
 namespace Zoo.SampleData
 {
@@ -117,10 +119,25 @@ namespace Zoo.SampleData
         }
         private static Animal CreateRandomAnimal(int index)
         {
+            var gen = new Random();
+            DateTime start = new DateTime(1995, 1, 1);
+            int range = (DateTime.Today - start).Days;
+
             return new Animal
             {
-                Name = _data[index][0]
+                Name = _data[index][0],
+                Sex = (Sex)typeof(Sex).GetEnumValues().GetValue(new Random().Next(typeof(Sex).GetEnumValues().Length)),
+                Classification = (Classification)typeof(Classification).GetEnumValues().GetValue(new Random().Next(typeof(Classification).GetEnumValues().Length)),
+                Species = (Species)typeof(Species).GetEnumValues().GetValue(new Random().Next(typeof(Species).GetEnumValues().Length)),
+                DateOfBirth = start.AddDays(gen.Next(range)),
+                DateAcquired = DateTime.Now
             };
         }
+  
+
+
+
+
+
     }
 }

@@ -4,10 +4,9 @@ using Zoo.Models.Enums;
 
 namespace Zoo
 {
-    public class Animal
+    public class UpdateAnimalRequest
     {
-        public int Id { get; set; }
-
+  
         public string Name { get; set; }
         public Sex Sex { get; set; }
         public DateTime DateOfBirth { get; set; }
