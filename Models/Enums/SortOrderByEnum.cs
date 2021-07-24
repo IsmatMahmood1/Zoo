@@ -1,8 +1,8 @@
 namespace Zoo.Models.Enums
 {
-    public enum OrderBy
+    public enum SortOrderBy
     {
-        Type,
+        Species,
         Classification,
         Age,
         Name,

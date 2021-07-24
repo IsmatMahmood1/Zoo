@@ -21,8 +21,17 @@ namespace Zoo.Controllers
             _animals = animals;
         }
 
+        [HttpGet("search")]
+        public List<AnimalResponse> Search([FromQuery] SearchRequest searchRequest)
+        {
+
+            var animals = _animals.Search(searchRequest);
+
+            return animals;
+        }
+
         [HttpGet("{id}")]
-        public ActionResult<AnimalResponse> GetAnimalById([FromRoute] int id)
+        public ActionResult<AnimalResponse> GetByAnimalId([FromRoute] int id)
         {
             var animal = _animals.GetAnimalById(id);
 
