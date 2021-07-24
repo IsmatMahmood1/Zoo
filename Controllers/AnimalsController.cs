@@ -1,11 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using Zoo.Repositories;
 using Zoo.Models.Response;
+using Zoo.Models.Request;
 
 namespace Zoo.Controllers
 {
     [ApiController]
-    [Route("/")]
+    [Route("[controller]")]
 
     public class AnimalsController : ControllerBase
     {
@@ -17,12 +22,29 @@ namespace Zoo.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AnimalResponse> GetById([FromRoute] int id)
+        public ActionResult<AnimalResponse> GetAnimalById([FromRoute] int id)
         {
-            var animal = _animals.GetById(id);
+            var animal = _animals.GetAnimalById(id);
 
             return new AnimalResponse(animal);
         }
+        
+        [HttpPost]
+        [Route("create")]
+        public IActionResult Create([FromBody] CreateAnimalRequest newAnimal)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var animal = _animals.CreateAnimalInDb(newAnimal);
+
+            var url = Url.Action("GetAnimalById", new { id = animal.Id });
+            var responseViewModel = new AnimalResponse(animal);
+            return Created(url, responseViewModel);
+        }
+
     }
 
 }

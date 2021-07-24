@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Zoo.Models;
 
-namespace Zoo
+namespace Zoo.Models.Request
 {
     public class SearchRequest
     {

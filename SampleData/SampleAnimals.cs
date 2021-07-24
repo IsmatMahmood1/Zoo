@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Zoo.Models.DbModels;
 using Zoo.Models.Enums;
 
 namespace Zoo.SampleData
@@ -113,17 +114,17 @@ namespace Zoo.SampleData
             new List<string> { "Marjy", "Beadell", "mbeadell2r", "mbeadell2r@delicious.com" }
         };
 
-        public static IEnumerable<Animal> GetAnimals()
+        public static IEnumerable<AnimalDbModel> GetAnimals()
         {
             return Enumerable.Range(0, NumberOfAnimals).Select(CreateRandomAnimal);
         }
-        private static Animal CreateRandomAnimal(int index)
+        private static AnimalDbModel CreateRandomAnimal(int index)
         {
             var gen = new Random();
             DateTime start = new DateTime(1995, 1, 1);
             int range = (DateTime.Today - start).Days;
 
-            return new Animal
+            return new AnimalDbModel
             {
                 Name = _data[index][0],
                 Sex = (Sex)typeof(Sex).GetEnumValues().GetValue(new Random().Next(typeof(Sex).GetEnumValues().Length)),

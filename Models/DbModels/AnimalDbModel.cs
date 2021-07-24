@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using Zoo.Models.Enums;
 
-namespace Zoo
+namespace Zoo.Models.DbModels
 {
-    public class Animal
+    public class AnimalDbModel
     {
         public int Id { get; set; }
 

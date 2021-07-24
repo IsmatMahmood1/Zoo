@@ -1,10 +1,14 @@
 using System.Linq;
+using Zoo.Models.DbModels;
+using Zoo.Models.Request;
+using Zoo.Models.Response;
 
 namespace Zoo.Repositories
 {
     public interface IAnimalsRepo
     {
-        Animal GetById(int id);
+        AnimalDbModel GetAnimalById(int id);
+        AnimalDbModel CreateAnimalInDb(CreateAnimalRequest newAnimal);
     }
 
     public class AnimalsRepo : IAnimalsRepo
@@ -15,15 +19,15 @@ namespace Zoo.Repositories
         {
             _context = context;
         }
-        public Animal GetById(int id)
+        public AnimalDbModel GetAnimalById(int id)
         {
             return _context.Animals
                 .Single(animal => animal.Id == id);
         }
-        public Animal Create(CreateAnimalRequest newAnimal)
+        public AnimalDbModel CreateAnimalInDb(CreateAnimalRequest newAnimal)
         {
 
-            var insertResponse = _context.Animals.Add(new Animal
+            var insertResponse = _context.Animals.Add(new AnimalDbModel
             {
                 Name = newAnimal.Name,
                 Sex = newAnimal.Sex,

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using Zoo.Models.Enums;
 
-namespace Zoo
+namespace Zoo.Models.Request
 {
     public class UpdateAnimalRequest
     {

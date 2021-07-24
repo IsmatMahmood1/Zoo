@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
+using Zoo.Models.DbModels;
 
 namespace Zoo
 {
@@ -7,7 +8,7 @@ namespace Zoo
     {
         public ZooDbContext(DbContextOptions<ZooDbContext> options) : base(options) { }
 
-        public DbSet<Animal> Animals { get; set; }
+        public DbSet<AnimalDbModel> Animals { get; set; }
 
     }
 }

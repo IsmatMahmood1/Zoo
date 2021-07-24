@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Zoo.Models.DbModels;
 using Zoo.Models.Enums;
 
 namespace Zoo.Models.Response
 {
     public class AnimalResponse
     {
-        private readonly Animal _animal;
+        private readonly AnimalDbModel _animal;
 
-        public AnimalResponse(Animal animal)
+        public AnimalResponse(AnimalDbModel animal)
         {
             _animal = animal;
         }
