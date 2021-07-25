@@ -16,5 +16,8 @@ namespace Zoo.Models.DbModels
         public Classification Classification { get; set; }
         public Species Species { get; set; }
 
+        public EnclosureDbModel Enclosure { get; set; }
+        public ZookeeperDbModel Zookeeper { get; set; }
+
     }
 }
