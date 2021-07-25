@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Zoo.Models.DbModels;
+using Zoo.Models.Enums;
 using Zoo.Models.Request;
 using Zoo.Models.Response;
 
@@ -25,15 +26,17 @@ namespace Zoo.Repositories
 
         public List<AnimalResponse> Search(SearchRequest search)
         {
-            var mostRecentBirthday = DateTime.Today.AddYears(-search.Age);
-            var earliestBirthday = mostRecentBirthday.AddYears(-1);
+            
+            var maxDOB = DateTime.Today.AddYears(-search.Age);
+            var minDOB = DateTime.Today.AddYears(-1);
 
-            var unorderedSearch =  _context.Animals
+            var unorderedSearch = _context.Animals
                 .Where(a => search.Species == null || a.Species == search.Species)
                 .Where(a => search.Classification == null || a.Classification == search.Classification)
-                .Where(a => search.Age == 0 || a.DateOfBirth > earliestBirthday && a.DateOfBirth <= mostRecentBirthday)
-                .Where(a => search.Name == "" || a.Name == search.Name)
+                .Where(a => string.IsNullOrEmpty(search.Name) || a.Name == search.Name)
+                .Where(a => search.Age == 0 || a.DateOfBirth >= minDOB && a.DateOfBirth <=maxDOB)
                 .Where(a => search.DateAcquired == default(DateTime) || a.DateAcquired == search.DateAcquired);
+
             return OrderResponse(unorderedSearch, search)
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize)
@@ -41,31 +44,31 @@ namespace Zoo.Repositories
                 .ToList();
 
         }
-        public IEnumerable<AnimalDbModel> OrderResponse(IEnumerable<AnimalDbModel> response, SearchRequest search)
+
+        public IEnumerable<AnimalDbModel> OrderResponse(IEnumerable<AnimalDbModel> unorderedSearch, SearchRequest search)
         {
             switch (search.SortOrderBy)
             {
-                case (Models.Enums.SortOrderBy)0:
-                    response = response.OrderBy(a => a.Species);
+                case 0:
+                    unorderedSearch = unorderedSearch.OrderBy(a => a.Species);
                     break;
-                case (Models.Enums.SortOrderBy)1:
-                    response = response.OrderBy(a => a.Classification);
+                case (SortOrderBy)1:
+                    unorderedSearch = unorderedSearch.OrderBy(a => a.Classification);
                     break;
-                case (Models.Enums.SortOrderBy)2:
-                    response = response.OrderBy(a => a.DateOfBirth);
+                case (SortOrderBy)2:
+                    unorderedSearch = unorderedSearch.OrderBy(a => a.DateOfBirth);
                     break;
-                case (Models.Enums.SortOrderBy)3:
-                    response = response.OrderBy(a => a.Name);
+                case (SortOrderBy)3:
+                    unorderedSearch = unorderedSearch.OrderBy(a => a.Name);
                     break;
-                case (Models.Enums.SortOrderBy)4:
-                    response = response.OrderBy(a => a.DateAcquired);
+                case (SortOrderBy)4:
+                    unorderedSearch = unorderedSearch.OrderBy(a => a.DateAcquired);
                     break;
-
                 default:
-                    response = response.OrderBy(a => a.Species);
+                    unorderedSearch = unorderedSearch.OrderBy(a => a.Species);
                     break;
             }
-            return response;
+            return unorderedSearch;
         }
         public AnimalDbModel GetAnimalById(int id)
         {

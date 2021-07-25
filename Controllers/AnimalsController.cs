@@ -21,7 +21,8 @@ namespace Zoo.Controllers
             _animals = animals;
         }
 
-        [HttpGet("search")]
+        [HttpPost]
+        [Route("search")]
         public List<AnimalResponse> Search([FromQuery] SearchRequest searchRequest)
         {
 
