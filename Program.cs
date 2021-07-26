@@ -33,17 +33,24 @@ namespace Zoo
 
             if (!context.Animals.Any())
             {
-                var enclosures = SampleEnclosures.GetEnclosures();
+
+                var enclosures = SampleEnclosures.GetEnclosures().ToList();
                 context.Enclosures.AddRange(enclosures);
                 context.SaveChanges();
 
-                var zookeepers = SampleZookeepers.GetZookeepers();
+                var zookeepers = SampleZookeepers.GetZookeepers().ToList();
                 context.ZooKeepers.AddRange(zookeepers);
                 context.SaveChanges();
 
                 var animals = SampleAnimals.GetAnimals();
                 context.Animals.AddRange(animals);
                 context.SaveChanges();
+
+                SampleZookeepers.UpdateZookeepers(zookeepers.ToList(), enclosures);
+                context.SaveChanges();
+
+                //var updatedZookeepers = SampleZookeepers.UpdateZookeepers();
+                //context.SaveChanges();
             }
         }
 

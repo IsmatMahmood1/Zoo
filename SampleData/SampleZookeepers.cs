@@ -26,20 +26,32 @@ namespace Zoo.SampleData
 
         public static IEnumerable<ZookeeperDbModel> GetZookeepers()
         {
-            var enclosures = SampleEnclosures.GetEnclosures().ToList();
-            var animals = SampleAnimals.GetAnimals().ToList();
-
-            return Enumerable.Range(0, NumberOfZookeepers)
-                .Select(i => CreateRandomZookeeper(i, enclosures));                
+ 
+            return Enumerable.Range(0, NumberOfZookeepers).Select(CreateRandomZookeeper);                
         }
-        private static ZookeeperDbModel CreateRandomZookeeper(int index, List<EnclosureDbModel> enclosures)
+        private static ZookeeperDbModel CreateRandomZookeeper(int index)
         {
             return new ZookeeperDbModel
             {
-                Name = _data[index][0],
-                Enclosure = enclosures.First(e => e.Id == Int32.Parse(_data[index][1])),
-
+                Name = _data[index][0]  
             };
+        }
+
+        public static List<ZookeeperDbModel> UpdateZookeepers(
+    List<ZookeeperDbModel> zookeepers, List<EnclosureDbModel> enclosures)
+        {
+            var random = new Random().Next(0,5);
+            zookeepers.Select(z => z.Enclosure = (EnclosureDbModel)enclosures.Select(e => e.Id == random));
+            //Enclosure = enclosures.Select(e => e.Enclosure == (Enclosure)Int32.Parse(_data[index][0])),
+            //foreach (var zookeeper in zookeepers)
+            //{
+            //    zookeeper.Enclosures = animals
+            //        .Where(a => a.Zookeeper.Name == zookeeper.Name)
+            //        .Select(a => a.Enclosure)
+            //        .Distinct()
+            //        .ToList();
+            //}
+            return zookeepers;
         }
 
     }
