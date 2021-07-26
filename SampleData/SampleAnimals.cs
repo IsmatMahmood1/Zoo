@@ -116,6 +116,9 @@ namespace Zoo.SampleData
 
         public static IEnumerable<AnimalDbModel> GetAnimals()
         {
+            var enclosures = SampleEnclosures.GetEnclosures().ToList();
+            var zookeepers = SampleZookeepers.GetZookeepers(enclosures).ToList();
+            return Enumerable.Range(0, NumberOfAnimals).Select(i => CreateRandomAnimal(i, enclosures, zookeepers));
 
             return Enumerable.Range(0, NumberOfAnimals).Select(CreateRandomAnimal);
 

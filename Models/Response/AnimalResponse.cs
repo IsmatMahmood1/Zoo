@@ -13,10 +13,12 @@ namespace Zoo.Models.Response
         public AnimalResponse(AnimalDbModel animal)
         {
             _animal = animal;
+            Id = animal.Id;
+            Name = animal.Name;
         }
 
-        public int Id => _animal.Id;
-        public string Name => _animal.Name;
+        public int Id { get; }
+        public string Name { get; }
 
         public Sex Sex => _animal.Sex;
         public int Age => GetAge(_animal.DateOfBirth);

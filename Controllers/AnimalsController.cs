@@ -21,8 +21,7 @@ namespace Zoo.Controllers
             _animals = animals;
         }
 
-        [HttpPost]
-        [Route("search")]
+        [HttpGet("search")]
         public List<AnimalResponse> Search([FromQuery] SearchRequest searchRequest)
         {
 
@@ -39,8 +38,7 @@ namespace Zoo.Controllers
             return new AnimalResponse(animal);
         }
 
-        [HttpPost]
-        [Route("create")]
+        [HttpPost("create")]
         public IActionResult Create([FromBody] CreateAnimalRequest newAnimal)
         {
             if (!ModelState.IsValid)
