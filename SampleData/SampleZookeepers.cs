@@ -24,10 +24,8 @@ namespace Zoo.SampleData
             new List<string> { "Francis Crick", "4" }
         };
 
-        public static IEnumerable<ZookeeperDbModel> GetZookeepers()
+        public static IEnumerable<ZookeeperDbModel> GetZookeepers(IList<EnclosureDbModel> enclosures)
         {
-            var enclosures = SampleEnclosures.GetEnclosures().ToList();
-
             return Enumerable.Range(0, NumberOfZookeepers)
                 .Select(i => CreateRandomZookeeper(i, enclosures));
         }
@@ -37,7 +35,6 @@ namespace Zoo.SampleData
             {
                 Name = _data[index][0],
                 Enclosure = enclosures[int.Parse(_data[index][1])],
-
             };
         }
 
