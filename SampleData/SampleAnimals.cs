@@ -121,11 +121,11 @@ namespace Zoo.SampleData
             return Enumerable.Range(0, NumberOfAnimals).Select(i => CreateRandomAnimal(i, enclosures, zookeepers));
 
         }
-        private static AnimalDbModel CreateRandomAnimal(int index, List<EnclosureDbModel> enclosures, List<ZookeeperDbModel> zookeepers)
+        private static AnimalDbModel CreateRandomAnimal(int index, IReadOnlyList<EnclosureDbModel> enclosures, IReadOnlyList<ZookeeperDbModel> zookeepers)
         {
             var gen = new Random();
-            DateTime start = new DateTime(1995, 1, 1);
-            int range = (DateTime.Today - start).Days;
+            var start = new DateTime(1995, 1, 1);
+            var range = (DateTime.Today - start).Days;
 
             return new AnimalDbModel
             {
@@ -135,10 +135,9 @@ namespace Zoo.SampleData
                 Species = (Species)typeof(Species).GetEnumValues().GetValue(new Random().Next(typeof(Species).GetEnumValues().Length)),
                 DateOfBirth = start.AddDays(gen.Next(range)),
                 DateAcquired = DateTime.Now,
-                Enclosure = (EnclosureDbModel)enclosures.Select(e => e.Id == new Random().Next(0, 5)),
-                Zookeeper = (ZookeeperDbModel)zookeepers.Select(e => e.Id == new Random().Next(0, 10))
+                Enclosure = enclosures[new Random().Next(0, 5)],
+                Zookeeper = zookeepers[new Random().Next(0, 10)]
             };
         }
-  
     }
 }

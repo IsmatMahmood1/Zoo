@@ -10,7 +10,7 @@ namespace Zoo.SampleData
     {
         public static int NumberOfEnclosures = 5;
 
-        private static IList<IList<string>> _data = new List<IList<string>>
+        private static readonly IList<IList<string>> _data = new List<IList<string>>
         {
             new List<string> { "0", "10" },
             new List<string> { "1", "50" },
@@ -25,11 +25,10 @@ namespace Zoo.SampleData
         }
         private static EnclosureDbModel CreateRandomEnclosure(int index)
         {
-
             return new EnclosureDbModel
             {
-                Enclosure = (Enclosure)Int32.Parse(_data[index][0]),
-                Capacity = Int32.Parse(_data[index][1]),
+                Enclosure = (Enclosure)int.Parse(_data[index][0]),
+                Capacity = int.Parse(_data[index][1]),
             };
         }
 

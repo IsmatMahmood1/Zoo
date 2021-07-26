@@ -27,17 +27,16 @@ namespace Zoo.SampleData
         public static IEnumerable<ZookeeperDbModel> GetZookeepers()
         {
             var enclosures = SampleEnclosures.GetEnclosures().ToList();
-            var animals = SampleAnimals.GetAnimals().ToList();
 
             return Enumerable.Range(0, NumberOfZookeepers)
-                .Select(i => CreateRandomZookeeper(i, enclosures));                
+                .Select(i => CreateRandomZookeeper(i, enclosures));
         }
-        private static ZookeeperDbModel CreateRandomZookeeper(int index, List<EnclosureDbModel> enclosures)
+        private static ZookeeperDbModel CreateRandomZookeeper(int index, IList<EnclosureDbModel> enclosures)
         {
             return new ZookeeperDbModel
             {
                 Name = _data[index][0],
-                Enclosure = enclosures.First(e => e.Id == Int32.Parse(_data[index][1])),
+                Enclosure = enclosures[int.Parse(_data[index][1])],
 
             };
         }
