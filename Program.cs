@@ -33,15 +33,6 @@ namespace Zoo
 
             if (!context.Animals.Any())
             {
-
-                var enclosures = SampleEnclosures.GetEnclosures().ToList();
-                context.Enclosures.AddRange(enclosures);
-                context.SaveChanges();
-
-                var zookeepers = SampleZookeepers.GetZookeepers().ToList();
-                context.ZooKeepers.AddRange(zookeepers);
-                context.SaveChanges();
-
                 var animals = SampleAnimals.GetAnimals();
                 context.Animals.AddRange(animals);
                 context.SaveChanges();

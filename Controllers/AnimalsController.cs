@@ -38,7 +38,7 @@ namespace Zoo.Controllers
 
             return new AnimalResponse(animal);
         }
-        
+
         [HttpPost]
         [Route("create")]
         public IActionResult Create([FromBody] CreateAnimalRequest newAnimal)
@@ -50,7 +50,7 @@ namespace Zoo.Controllers
 
             var animal = _animals.CreateAnimalInDb(newAnimal);
 
-            var url = Url.Action("GetAnimalById", new { id = animal.Id });
+            var url = Url.Action("GetByAnimalId", new { id = animal.Id });
             var responseViewModel = new AnimalResponse(animal);
             return Created(url, responseViewModel);
         }
